@@ -1,2 +1,2 @@
 # MyFileManager
-Customized for myself file menager from /downloads folder, because im lazy
+Customized for myself file manager from /downloads folder, because im lazy
