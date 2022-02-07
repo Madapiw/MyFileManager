@@ -127,3 +127,14 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#custom
+*.pdf
+*.mp4
+*.mp3
+*.exe
+*.json
+*.csv
+*.docx
+*.xlsx
+/DIR_FOR_TESTS
