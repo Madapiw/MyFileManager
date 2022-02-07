@@ -4,6 +4,7 @@ import os
 import shutil
 import logging
 from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 from watchdog.events import LoggingEventHandler
 
 #DIR_TO_WATCH = 'C:\\Users\\$USER$\\Downloads'
@@ -15,7 +16,7 @@ FILE_EXT_TO_WATCH = ['.pdf','.exe','.docx','.mp4','.mp3','.flack','avi','.jpg','
 
 # TODO[ ] write rest of folders to create and arrange
 DIRS_TO_MOVE = {'PDF': f'{DIR_TO_WATCH}\\PDF','EXE':f'{DIR_TO_WATCH}\\EXE','DOCX': f'{DIR_TO_WATCH}\\DOCX','MP4':f'{DIR_TO_WATCH}\\MP4','MP3':f'{DIR_TO_WATCH}\\MP3'}
-#'': f'{DIR_TO_WATCH}\\'   for faster coping
+#'': f'{DIR_TO_WATCH}\\'   for faster coping    
 
 def watchMyFiles():
     try:
@@ -28,7 +29,7 @@ def watchMyFiles():
         if not (os.path.exists(value)):
                 print(f"Creating dir: {value}")
                 os.mkdir(value) 
-
+    #TODO [ ] moveing folders to DOWNLOADED_FOLDERS with everything in them
     filesInDir = os.listdir(DIR_TO_WATCH)
     for file in filesInDir:
         for fileExt in FILE_EXT_TO_WATCH:
@@ -38,21 +39,10 @@ def watchMyFiles():
                     shutil.move(f'{DIR_TO_WATCH}\\{file}',f'{DIR_TO_WATCH}\\{fileExt.split(".")[1].upper()}\\{file}')
                     print(f'{file} moved to {fileExt.split(".")[1].upper()} folder')
                     
-    pass
-    
-    
-
+                    
 if __name__ == '__main__':
-    eventHandler = LoggingEventHandler
-    observer = Observer()
-    observer.schedule(eventHandler, DIR_TO_WATCH, recursive=False)
-    observer.start()
-    
     try:
-        while True:
-            watchMyFiles()
-            time.sleep(1)
+       watchMyFiles()
     except KeyboardInterrupt:
-        observer.stop()
-    observer.join()
+        sys.exit("Keyboard interruption, stopping.")
     
