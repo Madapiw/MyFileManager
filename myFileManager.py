@@ -17,7 +17,7 @@ FILE_EXT_TO_WATCH = ['.pdf','.exe','.docx','.mp4','.mp3','.flack','avi','.jpg','
 # TODO[ ] write rest of folders to create and arrange
 DIRS_TO_MOVE = {'PDF': f'{DIR_TO_WATCH}\\PDF','EXE':f'{DIR_TO_WATCH}\\EXE','DOCX': f'{DIR_TO_WATCH}\\DOCX','MP4':f'{DIR_TO_WATCH}\\MP4','MP3':f'{DIR_TO_WATCH}\\MP3'}
 #'': f'{DIR_TO_WATCH}\\'   for faster coping    
-
+zmiana
 def watchMyFiles():
     try:
         os.path.exists(DIR_TO_WATCH)
