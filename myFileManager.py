@@ -3,14 +3,11 @@ import sys
 import os
 import shutil
 import logging
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
-from watchdog.events import LoggingEventHandler
-
-#DIR_TO_WATCH = 'C:\\Users\\$USER$\\Downloads'
+import platform
+import dotenv
 
 #DIR FOR TESTS
-DIR_TO_WATCH = 'C:\\myData\\Scripts\\MyFileManager\\DIR_FOR_TESTS'
+DIR_TO_WATCH = os.getcwd()
 
 FILE_EXT_TO_WATCH = ['.pdf','.exe','.docx','.mp4','.mp3','.flack','.avi','.jpg','.png','.csv','.zip','.rar','.7z','.ova','.iso','ovpn','.ico','.gz','.psd','.xlsx','.torrent','.pem','.json','.odt','.md','.mlx','.bat','.txt','.tif','.raw','.py','.js','.css','.html','.xml','.c','.cpp','.php','.java','.jar','.mkv']
 
@@ -22,41 +19,50 @@ def watchMyFiles():
 
     if not os.path.exists(DIR_TO_WATCH):
         sys.exit("Directory does not exist.")
-
-    filesInDir = os.listdir(DIR_TO_WATCH)
-    #TODO [ ] moving folders to DOWNLOADED_FOLDERS with everything in them
-    for file in filesInDir:
-        for fileExt in FILE_EXT_TO_WATCH:
-            if not (file.endswith(fileExt) or file.endswith(fileExt.upper())):
+    
+    #TODO [ ] moving folders to DOWNLOADED_FOLDERS with everything in them // probably not useful lest leave folders alone
+    for file in os.listdir(DIR_TO_WATCH):
+        print(os.path.basename(os.path.realpath(__file__)))
+        if file != os.path.basename(os.path.realpath(__file__)):
+            if os.path.isfile(DIR_TO_WATCH +"\\"+ file):
+                fileExt = file.split(".")[-1]
+                if ("."+fileExt) in FILE_EXT_TO_WATCH:
+                    print(f'file: {file} | ext: {fileExt}')
+                    if file.endswith(fileExt) or file.endswith(fileExt.upper()):
+                        #TODO [ ] add exeption if file in folder already exists 
+                        if os.path.exists(f'{DIR_TO_WATCH}\\{fileExt.upper()}'):
+                            shutil.move(f'{DIR_TO_WATCH}\\{file}',f'{DIR_TO_WATCH}\\{fileExt.upper()}\\{file}')
+                            print(f'{file} ----> {fileExt.upper()} folder')
+                        elif os.path.exists(f'{DIR_TO_WATCH}\\{fileExt.upper()}') == False:
+                            print(f'Creating dir: {fileExt.upper()}')
+                            os.mkdir(f'{DIR_TO_WATCH}\\{fileExt.upper()}')
+                            shutil.move(f'{DIR_TO_WATCH}\\{file}',f'{DIR_TO_WATCH}\\{fileExt.upper()}\\{file}')
+                            print(f'{file} ----> {fileExt.upper()} folder')  
+                        else:
+                            print(f"Couldn't transfer {file} file to it's folder")
+            else:
+                continue
+        continue
+    
+    # for the remaning files with no known extension
+    for file in os.listdir(DIR_TO_WATCH):
+        if file != os.path.basename(os.path.realpath(__file__)):
+            if os.path.isfile(DIR_TO_WATCH +"\\"+ file):
                 if not os.path.exists(f'{DIR_TO_WATCH}\\OTHER'):
                     print(f'Creating dir: OTHER')
                     os.mkdir(f'{DIR_TO_WATCH}\\OTHER')
 
                 shutil.move(f'{DIR_TO_WATCH}\\{file}',f'{DIR_TO_WATCH}\\OTHER\\{file}')
                 print(f'{file} ----> OTHER folder')
-
-            elif file.endswith(fileExt) or file.endswith(fileExt.upper()):
-                #TODO [ ] add exeption if file in folder already exists 
-                if os.path.exists(f'{DIR_TO_WATCH}\\{fileExt.split(".")[1].upper()}'):
-                    shutil.move(f'{DIR_TO_WATCH}\\{file}',f'{DIR_TO_WATCH}\\{fileExt.split(".")[1].upper()}\\{file}')
-                    print(f'{file} ----> {fileExt.split(".")[1].upper()} folder')
-                elif os.path.exists(f'{DIR_TO_WATCH}\\{fileExt.split(".")[1].upper()}') == False:
-                    print(f'Creating dir: {fileExt.split(".")[1].upper()}')
-                    os.mkdir(f'{DIR_TO_WATCH}\\{fileExt.split(".")[1].upper()}')
-                    shutil.move(f'{DIR_TO_WATCH}\\{file}',f'{DIR_TO_WATCH}\\{fileExt.split(".")[1].upper()}\\{file}')
-                    print(f'{file} ----> {fileExt.split(".")[1].upper()} folder')    
-                else:
-                    print(f"Couldn't transfer {file} file to it's folder")  
-            
-
-def settingUp():
-    print("Settings:")
-
-
+            else:
+                assert Exception("Couldn't move file")
+        continue
 
 if __name__ == '__main__':
     try:
-       watchMyFiles()
+        print(f'Cleaning and organizing in progress in folder: {os.getcwd()}')
+        watchMyFiles()
+        sys.exit("All done !")
     except KeyboardInterrupt:
         sys.exit("Keyboard interruption, stopping.")
     
