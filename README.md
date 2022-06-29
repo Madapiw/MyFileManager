@@ -12,7 +12,7 @@ Run with python 3.9 🐍 or greater, or just click the executable file in the fo
 
 To run daily use cron on Linux or in task schedule on Windows as you with.
 
-![Usage showcase](https://github.com/Madapiw/MyFileManager/showcase.png)
+![Usage showcase](https://github.com/Madapiw/MyFileManager/blob/main/showcase.png?raw=true)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
