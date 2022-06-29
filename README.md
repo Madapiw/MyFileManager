@@ -8,9 +8,11 @@ and I'm getting lost in them.
 
 [Download](https://github.com/Madapiw/MyFileManager) as you wish, python file or exe.
 
-Run with python 3.9 🐍 or greater, or just click the executable file in the folder you intend to organize.
+Run with python 3.9 🐍 or greater, or just click the executable file in the folder you intend to organize (Program categorizes files based on extensions).
 
 To run daily use cron on Linux or in task schedule on Windows as you with.
+
+![Usage showcase](https://github.com/Madapiw/MyFileManager/showcase.png)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
