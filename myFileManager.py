@@ -1,6 +1,7 @@
 import sys
 import os
 import shutil
+import time
 
 #DIR FOR TESTS
 DIR_TO_WATCH = os.getcwd()
@@ -12,48 +13,54 @@ DIRS_TO_MOVE = {'PDF': f'{DIR_TO_WATCH}\\PDF','EXE':f'{DIR_TO_WATCH}\\EXE','DOCX
 #'': f'{DIR_TO_WATCH}\\'   for faster coping    
 
 def watchMyFiles():
-
+    start = time.perf_counter()
     if not os.path.exists(DIR_TO_WATCH):
         sys.exit("Directory does not exist.")
-    
+        
+    print(os.path.basename(os.path.realpath(__file__)))
     #TODO [ ] moving folders to DOWNLOADED_FOLDERS with everything in them // probably not useful lest leave folders alone
     for file in os.listdir(DIR_TO_WATCH):
-        print(os.path.basename(os.path.realpath(__file__)))
-        if file != os.path.basename(os.path.realpath(__file__)) or file != "myFileManager.exe":
-            if os.path.isfile(DIR_TO_WATCH +"\\"+ file):
-                fileExt = file.split(".")[-1]
-                if ("."+fileExt) in FILE_EXT_TO_WATCH:
-                    print(f'file: {file} | ext: {fileExt}')
-                    if file.endswith(fileExt) or file.endswith(fileExt.upper()):
-                        #TODO [ ] add exeption if file in folder already exists 
-                        if os.path.exists(f'{DIR_TO_WATCH}\\{fileExt.upper()}'):
-                            shutil.move(f'{DIR_TO_WATCH}\\{file}',f'{DIR_TO_WATCH}\\{fileExt.upper()}\\{file}')
-                            print(f'{file} ----> {fileExt.upper()} folder')
-                        elif os.path.exists(f'{DIR_TO_WATCH}\\{fileExt.upper()}') == False:
-                            print(f'Creating dir: {fileExt.upper()}')
-                            os.mkdir(f'{DIR_TO_WATCH}\\{fileExt.upper()}')
-                            shutil.move(f'{DIR_TO_WATCH}\\{file}',f'{DIR_TO_WATCH}\\{fileExt.upper()}\\{file}')
-                            print(f'{file} ----> {fileExt.upper()} folder')  
-                        else:
-                            print(f"Couldn't transfer {file} file to it's folder")
-            else:
-                continue
+        if file != str(os.path.basename(os.path.realpath(__file__))):
+            if file != "myfileManager.exe":
+                if os.path.isfile(DIR_TO_WATCH +"\\"+ file):
+                    fileExt = file.split(".")[-1]
+                    if ("."+fileExt) in FILE_EXT_TO_WATCH:
+                        print(f'file: {file} | ext: {fileExt}')
+                        if file.endswith(fileExt) or file.endswith(fileExt.upper()):
+                            #TODO [ ] add exeption if file in folder already exists 
+                            if os.path.exists(f'{DIR_TO_WATCH}\\{fileExt.upper()}'):
+                                shutil.move(f'{DIR_TO_WATCH}\\{file}',f'{DIR_TO_WATCH}\\{fileExt.upper()}\\{file}')
+                                print(f'{file} ----> {fileExt.upper()} folder')
+                            elif os.path.exists(f'{DIR_TO_WATCH}\\{fileExt.upper()}') == False:
+                                print(f'Creating dir: {fileExt.upper()}')
+                                os.mkdir(f'{DIR_TO_WATCH}\\{fileExt.upper()}')
+                                shutil.move(f'{DIR_TO_WATCH}\\{file}',f'{DIR_TO_WATCH}\\{fileExt.upper()}\\{file}')
+                                print(f'{file} ----> {fileExt.upper()} folder')  
+                            else:
+                                print(f"Couldn't transfer {file} file to it's folder")
+                else:
+                    continue
+            continue
         continue
     
     # for the remaning files with no known extension
     for file in os.listdir(DIR_TO_WATCH):
-        if file != os.path.basename(os.path.realpath(__file__)) or file != "myFileManager.exe":
-            if os.path.isfile(DIR_TO_WATCH +"\\"+ file):
-                if not os.path.exists(f'{DIR_TO_WATCH}\\OTHER'):
-                    print(f'Creating dir: OTHER')
-                    os.mkdir(f'{DIR_TO_WATCH}\\OTHER')
+        if file != str(os.path.basename(os.path.realpath(__file__))):
+            if file != "myfileManager.exe":
+                if os.path.isfile(DIR_TO_WATCH +"\\"+ file):
+                    if not os.path.exists(f'{DIR_TO_WATCH}\\OTHER'):
+                        print(f'Creating dir: OTHER')
+                        os.mkdir(f'{DIR_TO_WATCH}\\OTHER')
 
-                shutil.move(f'{DIR_TO_WATCH}\\{file}',f'{DIR_TO_WATCH}\\OTHER\\{file}')
-                print(f'{file} ----> OTHER folder')
-            else:
-                assert Exception("Couldn't move file")
+                    shutil.move(f'{DIR_TO_WATCH}\\{file}',f'{DIR_TO_WATCH}\\OTHER\\{file}')
+                    print(f'{file} ----> OTHER folder')
+                else:
+                    assert Exception("Couldn't move file")
+            continue
         continue
-
+    
+    print(f'Time taken to organize files: {round((time.perf_counter()-start),6)}s')
+    
 if __name__ == '__main__':
     try:
         print(f'Cleaning and organizing in progress in folder: {os.getcwd()}')
