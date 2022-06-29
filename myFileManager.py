@@ -1,10 +1,6 @@
-import time
 import sys
 import os
 import shutil
-import logging
-import platform
-import dotenv
 
 #DIR FOR TESTS
 DIR_TO_WATCH = os.getcwd()
@@ -23,7 +19,7 @@ def watchMyFiles():
     #TODO [ ] moving folders to DOWNLOADED_FOLDERS with everything in them // probably not useful lest leave folders alone
     for file in os.listdir(DIR_TO_WATCH):
         print(os.path.basename(os.path.realpath(__file__)))
-        if file != os.path.basename(os.path.realpath(__file__)):
+        if file != os.path.basename(os.path.realpath(__file__)) or file != "myFileManager.exe":
             if os.path.isfile(DIR_TO_WATCH +"\\"+ file):
                 fileExt = file.split(".")[-1]
                 if ("."+fileExt) in FILE_EXT_TO_WATCH:
@@ -46,7 +42,7 @@ def watchMyFiles():
     
     # for the remaning files with no known extension
     for file in os.listdir(DIR_TO_WATCH):
-        if file != os.path.basename(os.path.realpath(__file__)):
+        if file != os.path.basename(os.path.realpath(__file__)) or file != "myFileManager.exe":
             if os.path.isfile(DIR_TO_WATCH +"\\"+ file):
                 if not os.path.exists(f'{DIR_TO_WATCH}\\OTHER'):
                     print(f'Creating dir: OTHER')
