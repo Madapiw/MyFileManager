@@ -17,7 +17,7 @@ def watchMyFiles():
     if not os.path.exists(DIR_TO_WATCH):
         sys.exit("Directory does not exist.")
         
-    #TODO [ ] moving folders to DOWNLOADED_FOLDERS with everything in them // probably not useful lest leave folders alone
+    #TODO [ ] moving folders to DOWNLOADED_FOLDERS with everything in them // probably not useful just leave folders alone
     for file in os.listdir(DIR_TO_WATCH):
         if file != str(os.path.basename(os.path.realpath(__file__))):
             if file != "myFileManager.exe":
@@ -63,10 +63,12 @@ def watchMyFiles():
 if __name__ == '__main__':
     try:
         print("                                               <<< My File Manager >>> \n")
-        print("<---------------------------------------------------------------------------------------------->")
+        print("<---------------------------------------------------------------------------------------------------------------->")
         print(f'Cleaning and organizing in progress, in folder: {os.getcwd()} \n')
         watchMyFiles()
-        sys.exit("All done !")
+        print("All done ! Press any key to quit")
+        os.system("pause")
     except KeyboardInterrupt:
         sys.exit("Keyboard interruption, stopping.")
+        
     

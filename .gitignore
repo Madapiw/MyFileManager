@@ -137,6 +137,11 @@ dmypy.json
 *.csv
 *.docx
 *.xlsx
+
 /DIR_FOR_TESTS
 folder-icon.ico
 setup.py
+file_version_info.txt
+buildexe.sh
+file_version_info_windows.txt
+metadata.yml
