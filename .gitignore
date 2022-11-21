@@ -145,3 +145,5 @@ file_version_info.txt
 buildexe.sh
 file_version_info_windows.txt
 metadata.yml
+__pycache__
+.github
