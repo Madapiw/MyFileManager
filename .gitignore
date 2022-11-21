@@ -140,6 +140,7 @@ dmypy.json
 
 /DIR_FOR_TESTS
 folder-icon.ico
+appicon.ico
 setup.py
 file_version_info.txt
 buildexe.sh
